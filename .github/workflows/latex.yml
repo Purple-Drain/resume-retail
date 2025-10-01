@@ -1,0 +1,29 @@
+name: Build PDFs and DOCX
+on:
+  push:
+    branches: [ "*" ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX + Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended latexmk pandoc
+      - name: Build
+        run: |
+          make all
+      - name: Upload PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdfs
+          path: |
+            resume/**.pdf
+      - name: Upload DOCX
+        uses: actions/upload-artifact@v4
+        with:
+          name: docx
+          path: |
+            resume/**.docx

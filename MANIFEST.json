@@ -1,0 +1,135 @@
+{
+  "files": [
+    {
+      "path": ".github/workflows/latex.yml",
+      "bytes": 716,
+      "sha256": "592d54fa50f004536c27e35ee9d2c042a8c30e15f8225bc95834311a2eba16f5"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "bytes": 1014,
+      "sha256": "1f0f53c0f565aef379c438e8ad0cb17ab09584f635c9dca1f3aca9047dfb72ae"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 102,
+      "sha256": "71952115a240b54bf9d94a04b5bc15730359e9d3d4264c9be4b5c86ba1c0abb2"
+    },
+    {
+      "path": "MANIFEST.json",
+      "bytes": 4269,
+      "sha256": "279f2b8a65b3de59b87c2f8fb7d6edd97e1fecf2939d22017e7f5d3fa3d0a851"
+    },
+    {
+      "path": "Makefile",
+      "bytes": 1414,
+      "sha256": "d1fe61ae59a8fec78a16742c265609f46f55716f4771ebff918766d9ac5fb07c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1252,
+      "sha256": "ad6f2b702bbff54cb1fcafdc7eb0de5c59466ec8268cc30bd54a170274d5fc0a"
+    },
+    {
+      "path": "VERSION",
+      "bytes": 6,
+      "sha256": "44e161e4495cac2cf7858043e9e6418e9579f0ddcfae826f9a372622968ce066"
+    },
+    {
+      "path": "context/CHANGELOG.md",
+      "bytes": 95,
+      "sha256": "8bc7f66033200efd0d88eb5270f90eb5b9ef7ddf22f2891fdcb44445f2c1d717"
+    },
+    {
+      "path": "docs/cheatsheets/first_time_github_setup.md",
+      "bytes": 85,
+      "sha256": "4b9a621e241c66fcb304a6e8bfe7956669db037475d045c6e5fed76794e22127"
+    },
+    {
+      "path": "docs/cheatsheets/github_setup_macos.md",
+      "bytes": 212,
+      "sha256": "1b0d6711b940de4842bfd1eb38a97e0b85013b8bad93d08cdd6a9c23057ead53"
+    },
+    {
+      "path": "docs/cheatsheets/setup_windows_tools.md",
+      "bytes": 90,
+      "sha256": "36e8bee672293e64182ecf4f7d9d1bde35cfe998b5a8bbd058efd3e0b06792b3"
+    },
+    {
+      "path": "resume/jb/Application_Pack_JBHiFi_Burwood_Blue_Final.tex",
+      "bytes": 1107,
+      "sha256": "bab7b6c1bf179384eed200b28d10afde75bb628ce4b6aa46847d2d381e31f9fb"
+    },
+    {
+      "path": "resume/jb/Checklist_JBHiFi_Burwood.tex",
+      "bytes": 545,
+      "sha256": "18e5a10b2571199d43d7dc7034aa7255404a66465abf359bd3e8854a34561e6b"
+    },
+    {
+      "path": "resume/jb/Cover_Letter_JBHiFi_Burwood_Blue_Final.tex",
+      "bytes": 2135,
+      "sha256": "a4fea95c7bf642da1dc155d7fd467906cc1b9bf67aebdb3b7f6d7d0e5e589377"
+    },
+    {
+      "path": "resume/jb/JB_HiFi_Burwood_Form_Answers_Expanded.tex",
+      "bytes": 3529,
+      "sha256": "b09d1367fa01ba80880448908de21353ee3adb2857ba087bcaf13a4748c7054c"
+    },
+    {
+      "path": "resume/jb/Resume_JBHiFi_Burwood_Blue_Final.tex",
+      "bytes": 4491,
+      "sha256": "6a519098889c1ff937715210c91990d8d86e4666a24a5c983a3e4be75fb4763c"
+    },
+    {
+      "path": "resume/main/Application_Pack_Main.tex",
+      "bytes": 1065,
+      "sha256": "9bcf4d39a2ce91e43cf642e2e74a079d2c7d55c0be8fdb936e97b1425da7a447"
+    },
+    {
+      "path": "resume/main/Cover_Letter_Main.tex",
+      "bytes": 2135,
+      "sha256": "a4fea95c7bf642da1dc155d7fd467906cc1b9bf67aebdb3b7f6d7d0e5e589377"
+    },
+    {
+      "path": "resume/main/Resume_Main.tex",
+      "bytes": 4491,
+      "sha256": "6a519098889c1ff937715210c91990d8d86e4666a24a5c983a3e4be75fb4763c"
+    },
+    {
+      "path": "scripts/build.ps1",
+      "bytes": 317,
+      "sha256": "1b71d8c6551a521b7477c04a15d729ac3e6b2c331557169ed0ffe6ecf41b6515"
+    },
+    {
+      "path": "scripts/build_wsl.sh",
+      "bytes": 464,
+      "sha256": "0deae23be49542a0b23e093a56f23f36397a3dc4f3b216a39319fd726cc56fa1"
+    },
+    {
+      "path": "scripts/init_repo.ps1",
+      "bytes": 219,
+      "sha256": "a54e66518e9af6caf796af715f346ed139f12817fcb9c72eb187098e85b3b7d5"
+    },
+    {
+      "path": "scripts/init_repo.sh",
+      "bytes": 228,
+      "sha256": "0c4c317650820f0c0a3633ff09d21458067164389d5d51fe5a4f5fb05fff4a3a"
+    },
+    {
+      "path": "scripts/quick_build.ps1",
+      "bytes": 756,
+      "sha256": "bcb128ea4a9490eef749246817768eb087531217a404eaa0bad3c8bce001ea0a"
+    },
+    {
+      "path": "tex/colors.sty",
+      "bytes": 123,
+      "sha256": "a165f803c73ba5e4a03a3a77ff2ce275a028fa72df0d8524a8d9d0b6db831066"
+    },
+    {
+      "path": "tex/macros_contact.tex",
+      "bytes": 250,
+      "sha256": "3cd8059923d07c8c98d0ed0c6ce34bb302a5189d40b3e7ce546c298cfc041585"
+    }
+  ],
+  "created_at": "2025-10-01T09:12:19Z"
+}

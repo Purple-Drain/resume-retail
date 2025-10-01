@@ -1,0 +1,32 @@
+name: Release (tag)
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install TeX + Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended latexmk pandoc
+      - name: Build all artifacts
+        run: |
+          make all
+          pandoc docs/cheatsheets/github_setup_macos.md -o docs/cheatsheets/github_setup_macos.pdf
+          pandoc docs/cheatsheets/first_time_github_setup.md -o docs/cheatsheets/first_time_github_setup.pdf
+          mkdir -p dist
+          cp -r resume dist/resume
+          cp docs/cheatsheets/*.pdf dist/
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Safe Mode Pack ${{ github.ref_name }}"
+          draft: false
+          prerelease: false
+          files: |
+            dist/**/*
