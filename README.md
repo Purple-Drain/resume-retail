@@ -41,3 +41,4 @@ make all
 
 ### SSH success message
 If you see `Hi <username>! You've successfully authenticated, but GitHub does not provide shell access.` — that's expected.
+# resume-retail
