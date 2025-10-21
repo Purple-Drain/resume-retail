@@ -1,0 +1,17 @@
+# latexmk/TeX aux
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.bbl
+*.blg
+
+# outputs
+resume/**/*.pdf
+resume/**/*.docx
+dist/

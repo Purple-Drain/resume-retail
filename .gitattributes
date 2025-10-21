@@ -1,0 +1,8 @@
+*.tex text eol=lf
+*.sty text eol=lf
+*.sh  text eol=lf
+Makefile text eol=lf
+
+*.pdf binary
+*.docx binary
+*.zip binary

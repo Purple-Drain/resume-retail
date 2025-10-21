@@ -1,0 +1,34 @@
+name: Build Resume (PDF & DOCX)
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX & Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y             texlive-latex-recommended texlive-latex-extra             texlive-fonts-recommended texlive-fonts-extra             texlive-xetex latexmk pandoc
+      - name: Build (PDF + DOCX)
+        run: make all
+      - name: Package (date + git hash tarballs)
+        run: make pack
+      - name: Upload PDFs & DOCX
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-docx
+          path: |
+            resume/**/*.pdf
+            resume/**/*.docx
+          if-no-files-found: warn
+      - name: Upload dist tarballs
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-tarballs
+          path: dist/*.tar.gz
+          if-no-files-found: warn
