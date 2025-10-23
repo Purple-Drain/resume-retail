@@ -1,0 +1,12 @@
+% Simplified font configuration
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% FontAwesome5 with fallback handling
+\usepackage{fontawesome5}
+
+% Only suppress truly cosmetic warnings, not errors
+\usepackage{silence}
+\WarningFilter{latex}{Font shape}
+\WarningFilter{fontspec}{Font feature 'Mapping=tex-text' is deprecated}
