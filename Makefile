@@ -24,20 +24,46 @@ help:
 	@echo "Employer packs: pack-jb, pack-tgg, pack-rebel"
 
 pdf:
-t@echo "Building main resume (single source of truth)..."
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Resume_Main.tex
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Cover_Letter_Main.tex
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Application_Pack_Main.tex
-t@echo "Building employer-specific materials..."
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Cover_Letter_JBHiFi_Burwood_Blue_Final.tex
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/JB_HiFi_Burwood_Form_Answers_Expanded.tex
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Checklist_JBHiFi_Burwood.tex
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Application_Pack_JBHiFi_Burwood_Blue_Final.tex
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Cover_Letter_TGG.tex
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Application_Pack_TGG.tex
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Cover_Letter_Rebel.tex
-t@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Application_Pack_Rebel.tex
-t@echo "Building DOCX files..."	@./scripts/build_docx.sh 2>/dev/null || echo "DOCX build completed with minor warnings (expected)"
+	@echo "Building all individual PDFs..."
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Resume_Main.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Cover_Letter_Main.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Application_Pack_Main.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Cover_Letter_JBHiFi_Burwood_Blue_Final.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/JB_HiFi_Burwood_Form_Answers_Expanded.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Checklist_JBHiFi_Burwood.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Application_Pack_JBHiFi_Burwood_Blue_Final.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Cover_Letter_TGG.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Application_Pack_TGG.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Cover_Letter_Rebel.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Application_Pack_Rebel.tex
+# Employer-specific PDF targets
+pdf-main:
+	@echo "Building main resume components..."
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Resume_Main.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Cover_Letter_Main.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Application_Pack_Main.tex
+
+pdf-jb:
+	@echo "Building JB Hi-Fi employer pack..."
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Cover_Letter_JBHiFi_Burwood_Blue_Final.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/JB_HiFi_Burwood_Form_Answers_Expanded.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Checklist_JBHiFi_Burwood.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Application_Pack_JBHiFi_Burwood_Blue_Final.tex
+
+pdf-tgg:
+	@echo "Building TGG employer pack..."
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Cover_Letter_TGG.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Application_Pack_TGG.tex
+
+pdf-rebel:
+	@echo "Building Rebel employer pack..."
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Cover_Letter_Rebel.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Application_Pack_Rebel.tex
+
+# DOCX builds using improved script
+docx:
+	@echo "Building DOCX files..."
+	@./scripts/build_docx.sh 2>/dev/null || echo "DOCX build completed with minor warnings (expected)"
 
 # Employer-specific DOCX targets  
 docx-jb docx-tgg docx-rebel:
