@@ -57,7 +57,7 @@ all: pdf docx
 
 clean:
 	@echo "Cleaning all build artifacts..."
-	@$(LATEXMK) -C -silent
+	@find . -name "*.fls" -exec latexmk -C -silent {} \; 2>/dev/null || true
 	@find . -name "*.aux" -delete 2>/dev/null || true
 	@find . -name "*.fls" -delete 2>/dev/null || true
 	@find . -name "*.fdb_latexmk" -delete 2>/dev/null || true
