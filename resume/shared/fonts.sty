@@ -1,25 +1,12 @@
-% Professional font configuration for resume
-% Eliminates font warnings by explicitly defining all fonts
-
-% Use Latin Modern (included with TeX Live) for main text
+% Simplified font configuration
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-
-% Ensure consistent font encoding
-\usepackage[utf8]{inputenc}
-
-% Configure microtype for better typography
 \usepackage{microtype}
 
-% FontAwesome5 with explicit font loading
+% FontAwesome5 with fallback handling
 \usepackage{fontawesome5}
-% Pre-load the FontAwesome fonts to prevent search warnings
-\newfontfamily\FontAwesome{FontAwesome5Free-Solid-900.otf}[
-  Path = /usr/share/fonts/opentype/font-awesome/,
-  Extension = .otf
-]
 
-% Suppress specific font warnings that are cosmetic
+% Only suppress truly cosmetic warnings, not errors
 \usepackage{silence}
-\WarningFilter{fontspec}{Font feature 'Mapping=tex-text' is deprecated.}
-\WarningFilter{fontawesome5}{Failed to find font}
+\WarningFilter{latex}{Font shape}
+\WarningFilter{fontspec}{Font feature 'Mapping=tex-text' is deprecated}
