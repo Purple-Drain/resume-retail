@@ -27,10 +27,12 @@ jobs:
           sudo apt-get install -y \
             texlive-latex-recommended texlive-latex-extra \
             texlive-fonts-recommended texlive-fonts-extra \
-            texlive-xetex latexmk pandoc
+            texlive-xetex latexmk pandoc python3-pip
           # Ensure fontawesome5 is available
           sudo tlmgr update --self || true
           sudo tlmgr install fontawesome5 || true
+          # Install python-docx for compression
+          pip3 install --user python-docx
       - name: Build ${{ matrix.name }}
         run: |
           if [ "${{ matrix.pack }}" = "main" ]; then
@@ -45,14 +47,26 @@ jobs:
           else
             make pack-${{ matrix.pack }}
           fi
-      - name: Upload ${{ matrix.name }} Artifacts
+      - name: Upload ${{ matrix.name }} Artifacts (packs)
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.pack }}-pack
           path: |
-            resume/**/*.pdf
-            resume/**/*.docx
             dist/*.tar.gz
+          if-no-files-found: warn
+      - name: Upload ${{ matrix.name }} PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.pack }}-pdfs
+          path: |
+            resume/**/*.pdf
+          if-no-files-found: warn
+      - name: Upload ${{ matrix.name }} DOCX
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.pack }}-docx
+          path: |
+            resume/**/*.docx
           if-no-files-found: warn
   
   # Legacy single build job for compatibility
@@ -66,20 +80,28 @@ jobs:
           sudo apt-get install -y \
             texlive-latex-recommended texlive-latex-extra \
             texlive-fonts-recommended texlive-fonts-extra \
-            texlive-xetex latexmk pandoc
+            texlive-xetex latexmk pandoc python3-pip
           # Ensure fontawesome5 is available
           sudo tlmgr update --self || true
           sudo tlmgr install fontawesome5 || true
+          # Install python-docx for compression
+          pip3 install --user python-docx
       - name: Build (PDF + DOCX)
         run: make all
       - name: Package (date + git hash tarballs)
         run: make pack
-      - name: Upload All PDFs & DOCX
+      - name: Upload All PDFs
         uses: actions/upload-artifact@v4
         with:
-          name: all-resumes-docx
+          name: all-pdfs
           path: |
             resume/**/*.pdf
+          if-no-files-found: warn
+      - name: Upload All DOCX
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-docx
+          path: |
             resume/**/*.docx
           if-no-files-found: warn
       - name: Upload All Distribution Tarballs
