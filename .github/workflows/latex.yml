@@ -11,7 +11,13 @@ jobs:
       - name: Install TeX + Pandoc
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended latexmk pandoc
+          sudo apt-get install -y \
+            texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended texlive-fonts-extra \
+            texlive-xetex latexmk pandoc
+          # Ensure fontawesome5 is available
+          sudo tlmgr update --self || true
+          sudo tlmgr install fontawesome5 || true
       - name: Build
         run: |
           make all
@@ -20,10 +26,10 @@ jobs:
         with:
           name: pdfs
           path: |
-            resume/**.pdf
+            resume/**/*.pdf
       - name: Upload DOCX
         uses: actions/upload-artifact@v4
         with:
           name: docx
           path: |
-            resume/**.docx
+            resume/**/*.docx
