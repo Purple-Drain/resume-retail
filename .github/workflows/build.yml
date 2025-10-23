@@ -8,6 +8,56 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - pack: "main"
+            name: "Main Resume"
+          - pack: "jb"
+            name: "JB Hi-Fi Pack"
+          - pack: "tgg"
+            name: "The Good Guys Pack"
+          - pack: "rebel"
+            name: "Rebel Sport Pack"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX & Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended texlive-fonts-extra \
+            texlive-xetex latexmk pandoc
+          # Ensure fontawesome5 is available
+          sudo tlmgr update --self || true
+          sudo tlmgr install fontawesome5 || true
+      - name: Build ${{ matrix.name }}
+        run: |
+          if [ "${{ matrix.pack }}" = "main" ]; then
+            make pdf docx
+          else
+            make pdf-${{ matrix.pack }} docx-${{ matrix.pack }}
+          fi
+      - name: Package ${{ matrix.name }}
+        run: |
+          if [ "${{ matrix.pack }}" = "main" ]; then
+            make pack
+          else
+            make pack-${{ matrix.pack }}
+          fi
+      - name: Upload ${{ matrix.name }} Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.pack }}-pack
+          path: |
+            resume/**/*.pdf
+            resume/**/*.docx
+            dist/*.tar.gz
+          if-no-files-found: warn
+  
+  # Legacy single build job for compatibility
+  build-all:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install TeX & Pandoc
@@ -24,17 +74,17 @@ jobs:
         run: make all
       - name: Package (date + git hash tarballs)
         run: make pack
-      - name: Upload PDFs & DOCX
+      - name: Upload All PDFs & DOCX
         uses: actions/upload-artifact@v4
         with:
-          name: pdf-docx
+          name: all-resumes-docx
           path: |
             resume/**/*.pdf
             resume/**/*.docx
           if-no-files-found: warn
-      - name: Upload dist tarballs
+      - name: Upload All Distribution Tarballs
         uses: actions/upload-artifact@v4
         with:
-          name: dist-tarballs
+          name: all-dist-tarballs
           path: dist/*.tar.gz
           if-no-files-found: warn
