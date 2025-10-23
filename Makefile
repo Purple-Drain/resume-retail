@@ -16,7 +16,7 @@ REBEL:= resume/rebel
 LATEXMK := latexmk
 PANDOC  := pandoc
 
-LATEXMK_FLAGS := -pdf -halt-on-error -interaction=nonstopmode -cd
+LATEXMK_FLAGS := -pdf -halt-on-error -interaction=nonstopmode -cd -silent
 PANDOC_FLAGS  := -s --resource-path=".:./tex:./resume:./resume/shared:./resume/main:./resume/jb:./resume/tgg:./resume/rebel"
 
 help:
