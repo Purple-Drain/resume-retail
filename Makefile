@@ -76,7 +76,9 @@ clean-pdf:
 clean-all: clean clean-pdf
 	@echo "Deep clean: removing distribution files..."
 	@rm -rf dist/ 2>/dev/null || true
-	@echo "✅ Everything cleaned"# ---- Packaging (date + git hash) ----
+	@echo "✅ Everything cleaned"
+
+# ---- Packaging (date + git hash) ----
 DATE := $(shell date +%F)
 HASH := $(shell git rev-parse --short HEAD 2>/dev/null || echo NOHASH)
 DIST := dist
