@@ -63,12 +63,12 @@ pdf-rebel:
 # DOCX builds using improved script
 docx:
 	@echo "Building DOCX files..."
-	@./scripts/build_docx.sh 2>/dev/null || echo "DOCX build completed with minor warnings (expected)"
+	@python3 scripts/enhance_docx.py
 
 # Employer-specific DOCX targets  
 docx-jb docx-tgg docx-rebel:
 	@echo "Building employer DOCX..."
-	@./scripts/build_docx.sh 2>/dev/null || echo "DOCX build completed"
+	@python3 scripts/enhance_docx.py
 
 all: pdf docx
 
