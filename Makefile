@@ -56,10 +56,27 @@ docx-jb docx-tgg docx-rebel:
 all: pdf docx
 
 clean:
-	$(LATEXMK) -C -silent
-	@find resume -name "*.docx" -delete 2>/dev/null || true
+	@echo "Cleaning all build artifacts..."
+	@$(LATEXMK) -C -silent
+	@find . -name "*.aux" -delete 2>/dev/null || true
+	@find . -name "*.fls" -delete 2>/dev/null || true
+	@find . -name "*.fdb_latexmk" -delete 2>/dev/null || true
+	@find . -name "*.log" -delete 2>/dev/null || true
+	@find . -name "*.out" -delete 2>/dev/null || true
+	@find . -name "*.synctex.gz" -delete 2>/dev/null || true
+	@find . -name "*.docx" -delete 2>/dev/null || true
+	@find . -name ".DS_Store" -delete 2>/dev/null || true
+	@echo "✅ Cleanup complete"
 
-# ---- Packaging (date + git hash) ----
+clean-pdf:
+	@echo "Cleaning PDF files only..."
+	@find . -name "*.pdf" -delete 2>/dev/null || true
+	@echo "✅ PDFs removed"
+
+clean-all: clean clean-pdf
+	@echo "Deep clean: removing distribution files..."
+	@rm -rf dist/ 2>/dev/null || true
+	@echo "✅ Everything cleaned"# ---- Packaging (date + git hash) ----
 DATE := $(shell date +%F)
 HASH := $(shell git rev-parse --short HEAD 2>/dev/null || echo NOHASH)
 DIST := dist
