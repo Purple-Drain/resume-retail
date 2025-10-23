@@ -1,13 +1,20 @@
+% Rebel Sport specific cover letter
 \documentclass[a4paper,10pt]{article}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[margin=1.2cm,bottom=1.5cm]{geometry}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{8pt}
+\setlength{\parskip}{6pt}
 \input{../shared/fonts.sty}
 \PassOptionsToPackage{hidelinks}{hyperref}\usepackage{hyperref}\usepackage{bookmark}
-\urlstyle{same}\usepackage{enumitem}\usepackage{xcolor}
+\urlstyle{same}\usepackage{enumitem}\usepackage{xcolor}\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
 \input{../shared/colors.sty}
 
-% --- Inline Contact Block (FontAwesome5 + clickable links) ---
+% Contact Block
 \makeatletter
 \providecommand{\ContactBlock}{}
 \renewcommand{\ContactBlock}{%
@@ -20,38 +27,40 @@
   }\par
 }
 \makeatother
-% --- End Inline Contact Block ---
 
 \begin{document}
 \ContactBlock
 
 \vspace{1em}
 
-\noindent [Date]
+\today
 
-\noindent Rebel Sport\\[Store Location]\\[Store Address]
+\vspace{1em}
 
-\noindent Dear Hiring Manager,
+Dear Rebel Sport Team,
 
-I am excited to apply for the [Position Title] position at Rebel Sport [Store Location]. With a strong background in retail customer service and sales, I am eager to bring my enthusiasm for sports and fitness to your dynamic team.
+I am writing to express my strong interest in retail positions at Rebel Sport Burwood, where I can leverage my extensive customer service experience and genuine passion for consumer electronics and technology.
 
-Throughout my retail career, I have developed valuable skills that directly translate to sporting goods retail:
+With over 7 years of retail experience at Dick Smith Electronics and Big W, I have developed strong skills specifically aligned with Rebel Sport's customer-focused environment. My background spans consumer electronics, home entertainment, gaming, and technology products across diverse customer groups.
 
-\begin{itemize}[nosep,leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=4pt]
-\item Exceptional customer service and product consultation across diverse customer needs
-\item Sales experience with technical products requiring detailed product knowledge
-\item POS systems, inventory management, and merchandising expertise
-\item Team collaboration and ability to work in fast-paced retail environments
-\item Training and mentoring experience with new team members
-\item Loss prevention awareness and store security protocols
+Key highlights that make me an excellent fit for Rebel Sport include:
+\begin{itemize}
+\item Exceptional customer service and result-driven sales in consumer electronics and entertainment
+\item Deep passion for technology, gaming, music, and home entertainment systems
+\item POS system operation, cash handling, and high-volume transaction processing
+\item Merchandising and inventory management in fast-paced retail environments
+\item Team collaboration, training, and mentoring experience
+\item Strong product knowledge and enthusiasm for helping customers find the right solutions
 \end{itemize}
 
-I am passionate about sports and fitness, and I understand the importance of matching customers with the right equipment for their activities and skill levels. Rebel Sport's commitment to supporting Australians' active lifestyles resonates with my personal values and professional goals.
+What excites me most about Rebel Sport is the opportunity to combine my retail expertise with my genuine enthusiasm for technology and entertainment. I stay current with the latest gaming trends, audio equipment, and consumer electronics, which enables me to provide knowledgeable recommendations and exceptional customer experiences.
 
-I would appreciate the opportunity to discuss how my retail experience and passion for sports can contribute to Rebel Sport's success. Thank you for your consideration.
+I am particularly drawn to Rebel Sport's customer-centric culture and would welcome the opportunity to contribute to your team's continued success. I am available for immediate start and would love to discuss how my experience and passion align with Rebel Sport's values.
+
+Thank you for considering my application. I look forward to hearing from you.
 
 Sincerely,
 
-\textbf{Aaron De Vries}
+Aaron De Vries
 
 \end{document}

@@ -1,13 +1,20 @@
+% The Good Guys specific cover letter
 \documentclass[a4paper,10pt]{article}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[margin=1.2cm,bottom=1.5cm]{geometry}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{8pt}
+\setlength{\parskip}{6pt}
 \input{../shared/fonts.sty}
 \PassOptionsToPackage{hidelinks}{hyperref}\usepackage{hyperref}\usepackage{bookmark}
-\urlstyle{same}\usepackage{enumitem}\usepackage{xcolor}
+\urlstyle{same}\usepackage{enumitem}\usepackage{xcolor}\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
 \input{../shared/colors.sty}
 
-% --- Inline Contact Block (FontAwesome5 + clickable links) ---
+% Contact Block
 \makeatletter
 \providecommand{\ContactBlock}{}
 \renewcommand{\ContactBlock}{%
@@ -20,37 +27,40 @@
   }\par
 }
 \makeatother
-% --- End Inline Contact Block ---
 
 \begin{document}
 \ContactBlock
 
 \vspace{1em}
 
-\noindent [Date]
+\today
 
-\noindent The Good Guys\\[Store Location]\\[Store Address]
+\vspace{1em}
 
-\noindent Dear Hiring Manager,
+Dear The Good Guys Team,
 
-I am writing to express my strong interest in the [Position Title] position at The Good Guys [Store Location]. With extensive experience in retail consumer electronics and home appliances, I am excited about the opportunity to contribute to your team's success.
+I am writing to express my strong interest in retail positions at The Good Guys Burwood, where I can leverage my extensive customer service experience and genuine passion for consumer electronics and technology.
 
-My retail background includes [X] years working with leading electronics retailers, where I developed expertise in:
+With over 7 years of retail experience at Dick Smith Electronics and Big W, I have developed strong skills specifically aligned with The Good Guys's customer-focused environment. My background spans consumer electronics, home entertainment, gaming, and technology products across diverse customer groups.
 
-\begin{itemize}[nosep,leftmargin=*,topsep=0pt,partopsep=0pt,itemsep=4pt]
-\item Customer service and sales in consumer electronics and home entertainment
-\item Product knowledge across technology, appliances, and home entertainment systems
-\item POS system operation, cash handling, and transaction processing
-\item Inventory management, merchandising, and loss prevention
-\item Team collaboration and training new staff members
+Key highlights that make me an excellent fit for The Good Guys include:
+\begin{itemize}
+\item Exceptional customer service and result-driven sales in consumer electronics and entertainment
+\item Deep passion for technology, gaming, music, and home entertainment systems
+\item POS system operation, cash handling, and high-volume transaction processing
+\item Merchandising and inventory management in fast-paced retail environments
+\item Team collaboration, training, and mentoring experience
+\item Strong product knowledge and enthusiasm for helping customers find the right solutions
 \end{itemize}
 
-I am particularly drawn to The Good Guys' commitment to providing customers with quality products and exceptional service. Your reputation for competitive pricing and extensive product range aligns perfectly with my passion for helping customers find the right technology solutions for their needs.
+What excites me most about The Good Guys is the opportunity to combine my retail expertise with my genuine enthusiasm for technology and entertainment. I stay current with the latest gaming trends, audio equipment, and consumer electronics, which enables me to provide knowledgeable recommendations and exceptional customer experiences.
 
-I would welcome the opportunity to discuss how my retail experience and customer service skills can contribute to The Good Guys' continued success. Thank you for considering my application.
+I am particularly drawn to The Good Guys's customer-centric culture and would welcome the opportunity to contribute to your team's continued success. I am available for immediate start and would love to discuss how my experience and passion align with The Good Guys's values.
+
+Thank you for considering my application. I look forward to hearing from you.
 
 Sincerely,
 
-\textbf{Aaron De Vries}
+Aaron De Vries
 
 \end{document}
