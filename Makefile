@@ -24,23 +24,41 @@ help:
 	@echo "Employer packs: pack-jb, pack-tgg, pack-rebel"
 
 pdf:
-	@echo "Building PDFs..."
+	@echo "Building all individual PDFs..."
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Resume_Main.tex
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Cover_Letter_Main.tex
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Application_Pack_Main.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Cover_Letter_JBHiFi_Burwood_Blue_Final.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/JB_HiFi_Burwood_Form_Answers_Expanded.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Checklist_JBHiFi_Burwood.tex
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Application_Pack_JBHiFi_Burwood_Blue_Final.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Cover_Letter_TGG.tex
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Application_Pack_TGG.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Cover_Letter_Rebel.tex
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Application_Pack_Rebel.tex
-
 # Employer-specific PDF targets
+pdf-main:
+	@echo "Building main resume components..."
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Resume_Main.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Cover_Letter_Main.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Application_Pack_Main.tex
+
 pdf-jb:
-	@echo "Building JB PDFs..."
+	@echo "Building JB Hi-Fi complete pack..."
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Cover_Letter_JBHiFi_Burwood_Blue_Final.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/JB_HiFi_Burwood_Form_Answers_Expanded.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Checklist_JBHiFi_Burwood.tex
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Application_Pack_JBHiFi_Burwood_Blue_Final.tex
+
 pdf-tgg:
-	@echo "Building TGG PDFs..."
+	@echo "Building TGG complete pack..."
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Cover_Letter_TGG.tex
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Application_Pack_TGG.tex
+
 pdf-rebel:
-	@echo "Building Rebel PDFs..."
+	@echo "Building Rebel complete pack..."
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Cover_Letter_Rebel.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Application_Pack_Rebel.tex	@echo "Building Rebel PDFs..."
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Application_Pack_Rebel.tex
 
 # DOCX builds using improved script

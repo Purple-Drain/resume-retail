@@ -1,4 +1,15 @@
-% Rebel Application Pack: imports default main resume
-\input{../main/Resume_Main}
+% Rebel Application Pack: Cover Letter + Resume
+\documentclass[a4paper,10pt]{article}
+\usepackage[margin=1.2cm,bottom=1.5cm]{geometry}
+\input{../shared/fonts.sty}
+\usepackage{pdfpages}
 
-% Rebel-specific assets can be added/extended below
+\begin{document}
+
+% Include Rebel-specific cover letter as first page
+\includepdf[pages=-]{Cover_Letter_Rebel.pdf}
+
+% Include main resume as subsequent pages
+\includepdf[pages=-]{../main/Resume_Main.pdf}
+
+\end{document}

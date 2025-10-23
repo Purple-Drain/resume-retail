@@ -1,15 +1,20 @@
-
+% Generic main cover letter template
 \documentclass[a4paper,10pt]{article}
-\usepackage[margin=1.1cm]{geometry}
-\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
-\usepackage[T1]{fontenc}\usepackage{lmodern}
-\PassOptionsToPackage{hidelinks}{hyperref}\usepackage{hyperref}\urlstyle{same}
-\usepackage{enumitem}\usepackage{xcolor}\usepackage{titlesec}
+\usepackage[margin=1.2cm,bottom=1.5cm]{geometry}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\input{../shared/fonts.sty}
+\PassOptionsToPackage{hidelinks}{hyperref}\usepackage{hyperref}\usepackage{bookmark}
+\urlstyle{same}\usepackage{enumitem}\usepackage{xcolor}\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
 \input{../shared/colors.sty}
 
-\titleformat{\section}{\large\scshape\raggedright\color{black}}{}{0em}{}[\vspace{0.25\baselineskip}{\color{MidBlue}\titlerule}\vspace{0.1\baselineskip}]
-\titlespacing*{\section}{0pt}{0.6\baselineskip}{0.35\baselineskip}
-% --- Inline Contact Block (FontAwesome5 + clickable links) ---
+% Contact Block
 \makeatletter
 \providecommand{\ContactBlock}{}
 \renewcommand{\ContactBlock}{%
@@ -22,32 +27,39 @@
   }\par
 }
 \makeatother
-% --- End Inline Contact Block ---
+
 \begin{document}
 \ContactBlock
 
-\section*{About Me}
-Passionate, customer-focused, and results-driven retail team member offering extensive experience in sales, customer service, consumer electronics, IT, entertainment, and appliances.
+\vspace{1em}
 
-\begin{flushright}
-Homebush, NSW \\
-19 September 2025
-\end{flushright}
+\today
 
-\begin{flushright}
-Homebush, NSW \\
-19 September 2025
-\end{flushright}
-Hiring Manager \\
-JB Hi-Fi Burwood \\\\[0.6\baselineskip]
-Dear Hiring Manager, \\\\[0.4\baselineskip]
-I'm excited to apply for the Retail Team Member role at JB Hi-Fi Burwood. With hands-on experience in consumer electronics at Dick Smith and Big W, I know how to deliver great service, run POS during busy trading, and maintain strong merchandising and stock standards.
-What excites me most is contributing to the opening of a brand-new JB Hi-Fi store. First impressions shape loyalty and reputation. I'm keen to help set a positive, customer-first culture from day one so Burwood customers immediately associate the new location with trusted service and expertise.
-I bring a mix of retail know-how and IT experience that makes me confident with tech. I've exceeded sales targets, solved customer problems, and built repeat business. My software engineering background sharpened my problem-solving and teamwork—ideal for fast-paced environments.
-Most importantly, I genuinely love technology, entertainment, gaming, and music—passions that match JB Hi-Fi's culture. I'd love to bring my energy to your new Burwood team and help build a strong foundation for lasting success.
-I look forward to hearing from you.
-\vspace{0.8\baselineskip}
-Sincerely, \\
+\vspace{1em}
+
+Dear Hiring Manager,
+
+I am writing to express my strong interest in retail positions that leverage my extensive customer service experience and passion for technology and consumer electronics.
+
+With over 7 years of retail experience at Dick Smith Electronics and Big W, I have developed strong skills in customer-focused sales, POS operations, inventory management, and team collaboration. My background spans consumer electronics, home entertainment, technology, and appliances across diverse customer groups.
+
+Key highlights of my retail experience include:
+\begin{itemize}
+\item Exceptional customer service and result-driven sales in consumer electronics
+\item POS system operation, cash handling, and high-volume transaction processing  
+\item Merchandising, inventory management, and back-of-house operations
+\item Team training, mentoring, and performance support
+\item Loss prevention awareness and store security protocols
+\end{itemize}
+
+I am passionate about technology, music, and gaming, which aligns well with retail environments focusing on consumer electronics and entertainment. My enthusiasm for these areas, combined with my proven retail expertise, enables me to provide knowledgeable recommendations and exceptional customer experiences.
+
+I would welcome the opportunity to discuss how my retail experience and customer-focused approach can contribute to your team's success. I am available for immediate start and look forward to hearing from you.
+
+Thank you for considering my application.
+
+Sincerely,
+
 Aaron De Vries
 
 \end{document}

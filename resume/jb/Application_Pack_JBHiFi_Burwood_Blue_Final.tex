@@ -1,4 +1,26 @@
-% JB-specific application pack now imports the default main resume
-\input{../main/Resume_Main}
+% JB Hi-Fi Application Pack: Cover Letter + Resume
+\documentclass[a4paper,10pt]{article}
+\usepackage[margin=1.2cm,bottom=1.5cm]{geometry}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\input{../shared/fonts.sty}
+\PassOptionsToPackage{hidelinks}{hyperref}\usepackage{hyperref}\usepackage{bookmark}
+\urlstyle{same}\usepackage{enumitem}\usepackage{xcolor}\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\input{../shared/colors.sty}
+\usepackage{pdfpages}
 
-% JB-specific extras below (cover letter, form answers, etc.) can be added here
+\begin{document}
+
+% Include JB-specific cover letter as first page
+\includepdf[pages=-]{Cover_Letter_JBHiFi_Burwood_Blue_Final.pdf}
+
+% Include main resume as subsequent pages
+\includepdf[pages=-]{../main/Resume_Main.pdf}
+
+\end{document}
