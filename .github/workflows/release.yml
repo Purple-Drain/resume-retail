@@ -13,20 +13,34 @@ jobs:
       - name: Install TeX + Pandoc
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended latexmk pandoc
+          sudo apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-xetex latexmk pandoc python3-pip
+          sudo tlmgr update --self || true
+          sudo tlmgr install fontawesome5 || true
+          pip3 install --user python-docx
       - name: Build all artifacts
         run: |
           make all
-          pandoc docs/cheatsheets/github_setup_macos.md -o docs/cheatsheets/github_setup_macos.pdf
-          pandoc docs/cheatsheets/first_time_github_setup.md -o docs/cheatsheets/first_time_github_setup.pdf
           mkdir -p dist
-          cp -r resume dist/resume
-          cp docs/cheatsheets/*.pdf dist/
+          # Copy PDFs and DOCX to dist as separate folders
+          mkdir -p dist/pdfs dist/docx
+          find resume -type f -name "*.pdf" -exec cp {} dist/pdfs/ \;
+          find resume -type f -name "*.docx" -exec cp {} dist/docx/ \;
+          # Create tarballs
+          make pack
+      - name: Generate release notes
+        id: notes
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "Safe Mode Pack ${{ github.ref_name }}"
+          name: "Resume Pack ${{ github.ref_name }}"
           draft: false
           prerelease: false
           files: |
-            dist/**/*
+            dist/**/*.pdf
+            dist/**/*.docx
+            dist/*.tar.gz
