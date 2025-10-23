@@ -17,7 +17,7 @@ LATEXMK := latexmk
 PANDOC  := pandoc
 
 LATEXMK_FLAGS := -pdf -halt-on-error -interaction=nonstopmode -cd
-PANDOC_FLAGS  := -s --resource-path=".:./tex:./resume:./resume/main:./resume/jb:./resume/tgg:./resume/rebel"
+PANDOC_FLAGS  := -s --resource-path=".:./tex:./resume:./resume/shared:./resume/main:./resume/jb:./resume/tgg:./resume/rebel"
 
 help:
 	@echo "Targets: pdf, docx, all, clean"
