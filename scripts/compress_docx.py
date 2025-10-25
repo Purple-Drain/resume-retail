@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-DOCX compression with perfect PDF parity
-Simple approach: Fix existing structure rather than rebuilding
+DOCX compression with perfect PDF parity including bullet points
 """
 import os
 import sys
@@ -31,14 +30,64 @@ def add_horizontal_line(paragraph, color_rgb=(70, 130, 180)):
     borders.append(bottom_border)
     pPr.append(borders)
 
+def add_bullet_point(paragraph):
+    """Add bullet point formatting to paragraph"""
+    p = paragraph._element
+    pPr = p.get_or_add_pPr()
+    
+    # Add numbering properties for bullet
+    numPr = OxmlElement('w:numPr')
+    
+    # Set bullet list level
+    ilvl = OxmlElement('w:ilvl')
+    ilvl.set(qn('w:val'), '0')
+    numPr.append(ilvl)
+    
+    # Set numbering ID (1 is typically bullet list in Word)
+    numId = OxmlElement('w:numId')
+    numId.set(qn('w:val'), '1')
+    numPr.append(numId)
+    
+    pPr.append(numPr)
+
+def is_bullet_point(text):
+    """Detect if a paragraph should be a bullet point"""
+    # Key Skills section bullets
+    key_skills = [
+        "Customer service", "POS system", "Merchandising",
+        "Team collaboration", "Technology,", "Loss prevention",
+        "Effective communication"
+    ]
+    
+    # Job experience bullets - typically start with action verbs
+    action_verbs = [
+        "Delivered", "Processed", "Handled", "Set up",
+        "Trained", "Specialized", "Maintained", 
+        "Collaborated", "Applied", "Partnered"
+    ]
+    
+    # Check if it's a Key Skills bullet
+    if any(skill in text for skill in key_skills):
+        return True
+    
+    # Check if it starts with an action verb (job bullets)
+    if any(text.strip().startswith(verb) for verb in action_verbs):
+        return True
+    
+    # Check for bullets in Additional Information
+    if text.startswith("Passionate about") or text.startswith("Available for"):
+        return True
+        
+    return False
+
 def compress_docx_formatting(docx_path):
-    """Apply complete formatting with perfect PDF match"""
+    """Apply complete formatting with perfect PDF match including bullets"""
     
     if not os.path.exists(docx_path):
         print(f"❌ File not found: {docx_path}")
         return False
     
-    print(f"🔧 Applying perfect formatting: {docx_path}")
+    print(f"🔧 Applying perfect formatting with bullets: {docx_path}")
     
     try:
         doc = Document(docx_path)
@@ -53,7 +102,7 @@ def compress_docx_formatting(docx_path):
         # Track paragraphs to remove
         paras_to_remove = []
         
-        # Process all paragraphs
+        # Section headers
         section_headers = [
             "About Me", "Key Skills", "Retail Experience",
             "Other Professional Experience", "Education",
@@ -122,6 +171,20 @@ def compress_docx_formatting(docx_path):
                 add_horizontal_line(para)
                 continue
             
+            # BULLET POINTS - Add actual bullets!
+            if is_bullet_point(text):
+                para.paragraph_format.space_before = Pt(0)
+                para.paragraph_format.space_after = Pt(2)
+                para.paragraph_format.left_indent = Cm(0.63)  # Standard bullet indent
+                
+                for run in para.runs:
+                    run.font.name = "Times New Roman"
+                    run.font.size = Pt(10)
+                
+                # Add bullet formatting
+                add_bullet_point(para)
+                continue
+            
             # Job titles (bold)
             if any(title in text for title in [
                 "Retail Team Member", "Senior Software Engineer",
@@ -149,7 +212,7 @@ def compress_docx_formatting(docx_path):
                     run.font.size = Pt(10)
                 continue
             
-            # Bullet points and regular content
+            # Regular content (About Me paragraph, etc)
             para.paragraph_format.space_before = Pt(0)
             para.paragraph_format.space_after = Pt(2)
             
@@ -170,11 +233,9 @@ def compress_docx_formatting(docx_path):
         style.paragraph_format.space_before = Pt(0)
         style.paragraph_format.space_after = Pt(2)
         style.paragraph_format.line_spacing = 1.0
-        style.paragraph_format.left_indent = Pt(0)
-        style.paragraph_format.right_indent = Pt(0)
         
         doc.save(docx_path)
-        print(f"✅ Perfect formatting applied")
+        print(f"✅ Perfect formatting with bullets applied")
         return True
         
     except Exception as e:
@@ -192,13 +253,13 @@ def main():
         print(f"❌ File not found: {docx_path}")
         sys.exit(1)
     
-    print(f"🚀 Creating perfect DOCX: {docx_path}")
+    print(f"🚀 Creating perfect DOCX with bullets: {docx_path}")
     
     if compress_docx_formatting(docx_path):
         print(f"✅ DOCX compression completed successfully!")
         print(f"🏆 Professional 1-page DOCX ready with proper formatting")
         print(f"🎉 COMPLETE: Professional 1-page DOCX generated!")
-        print(f"📄 Features: Proper fonts, blue headers, icons, 1.2cm margins")
+        print(f"📄 Features: Proper fonts, blue headers, icons, bullets, 1.2cm margins")
         print(f"📍 Location: {docx_path}")
         return True
     else:

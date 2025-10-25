@@ -5,9 +5,8 @@ on:
     tags:
       - 'v*'
 
-# Add permissions for the workflow
 permissions:
-  contents: write  # Required to create releases and upload assets
+  contents: write
 
 jobs:
   build-and-release:
@@ -27,23 +26,12 @@ jobs:
           
       - name: Build all artifacts
         run: |
-          # Build everything first
           make all
-          
-          # Wait to ensure all file operations complete
           sleep 2
-          
-          # Now create distribution folders
           mkdir -p dist/pdfs dist/docx
-          
-          # Copy files to dist folders
           find resume -type f -name "*.pdf" -exec cp {} dist/pdfs/ \;
           find resume -type f -name "*.docx" -exec cp {} dist/docx/ \;
-          
-          # Wait before creating tarballs
           sleep 1
-          
-          # Create tarballs from completed files
           make pack
           
       - name: Create GitHub Release
