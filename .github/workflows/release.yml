@@ -1,8 +1,14 @@
 name: Release (tag)
+
 on:
   push:
     tags:
       - 'v*'
+
+# Add permissions for the workflow
+permissions:
+  contents: write  # Required to create releases and upload assets
+
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
@@ -10,6 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          
       - name: Install TeX + Pandoc
         run: |
           sudo apt-get update
@@ -17,6 +24,7 @@ jobs:
           sudo tlmgr update --self || true
           sudo tlmgr install fontawesome5 || true
           pip3 install --user python-docx
+          
       - name: Build all artifacts
         run: |
           make all
@@ -27,20 +35,17 @@ jobs:
           find resume -type f -name "*.docx" -exec cp {} dist/docx/ \;
           # Create tarballs
           make pack
-      - name: Generate release notes
-        id: notes
-        uses: softprops/action-gh-release@v2
-        with:
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: "Resume Pack ${{ github.ref_name }}"
           draft: false
           prerelease: false
+          generate_release_notes: true
           files: |
-            dist/**/*.pdf
-            dist/**/*.docx
+            dist/pdfs/*.pdf
+            dist/docx/*.docx
             dist/*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
