@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DOCX compression with perfect PDF parity including bullet points
+DOCX compression with perfect PDF parity including bullet points (•)
 """
 import os
 import sys
@@ -29,26 +29,6 @@ def add_horizontal_line(paragraph, color_rgb=(70, 130, 180)):
     bottom_border.set(qn('w:color'), f'{color_rgb[0]:02x}{color_rgb[1]:02x}{color_rgb[2]:02x}')
     borders.append(bottom_border)
     pPr.append(borders)
-
-def add_bullet_point(paragraph):
-    """Add bullet point formatting to paragraph"""
-    p = paragraph._element
-    pPr = p.get_or_add_pPr()
-    
-    # Add numbering properties for bullet
-    numPr = OxmlElement('w:numPr')
-    
-    # Set bullet list level
-    ilvl = OxmlElement('w:ilvl')
-    ilvl.set(qn('w:val'), '0')
-    numPr.append(ilvl)
-    
-    # Set numbering ID (1 is typically bullet list in Word)
-    numId = OxmlElement('w:numId')
-    numId.set(qn('w:val'), '1')
-    numPr.append(numId)
-    
-    pPr.append(numPr)
 
 def is_bullet_point(text):
     """Detect if a paragraph should be a bullet point"""
@@ -80,14 +60,30 @@ def is_bullet_point(text):
         
     return False
 
+def add_bullet_symbol(paragraph):
+    """Add actual bullet symbol (•) to the beginning of paragraph text"""
+    if paragraph.runs and paragraph.text.strip():
+        # Get the current text
+        full_text = paragraph.text.strip()
+        
+        # Clear the paragraph
+        paragraph.clear()
+        
+        # Add bullet symbol + space + original text
+        bullet_text = f"• {full_text}"
+        run = paragraph.add_run(bullet_text)
+        run.font.name = "Times New Roman"
+        run.font.size = Pt(10)
+        run.font.color.rgb = RGBColor(0, 0, 0)
+
 def compress_docx_formatting(docx_path):
-    """Apply complete formatting with perfect PDF match including bullets"""
+    """Apply complete formatting with perfect PDF match including bullet symbols"""
     
     if not os.path.exists(docx_path):
         print(f"❌ File not found: {docx_path}")
         return False
     
-    print(f"🔧 Applying perfect formatting with bullets: {docx_path}")
+    print(f"🔧 Applying perfect formatting with bullet symbols: {docx_path}")
     
     try:
         doc = Document(docx_path)
@@ -171,18 +167,14 @@ def compress_docx_formatting(docx_path):
                 add_horizontal_line(para)
                 continue
             
-            # BULLET POINTS - Add actual bullets!
+            # BULLET POINTS - Add bullet symbols (•)
             if is_bullet_point(text):
                 para.paragraph_format.space_before = Pt(0)
                 para.paragraph_format.space_after = Pt(2)
-                para.paragraph_format.left_indent = Cm(0.63)  # Standard bullet indent
+                para.paragraph_format.left_indent = Cm(0.5)  # Indent for bullets
                 
-                for run in para.runs:
-                    run.font.name = "Times New Roman"
-                    run.font.size = Pt(10)
-                
-                # Add bullet formatting
-                add_bullet_point(para)
+                # Add bullet symbol to text
+                add_bullet_symbol(para)
                 continue
             
             # Job titles (bold)
@@ -235,7 +227,7 @@ def compress_docx_formatting(docx_path):
         style.paragraph_format.line_spacing = 1.0
         
         doc.save(docx_path)
-        print(f"✅ Perfect formatting with bullets applied")
+        print(f"✅ Perfect formatting with bullet symbols applied")
         return True
         
     except Exception as e:
@@ -253,13 +245,13 @@ def main():
         print(f"❌ File not found: {docx_path}")
         sys.exit(1)
     
-    print(f"🚀 Creating perfect DOCX with bullets: {docx_path}")
+    print(f"🚀 Creating perfect DOCX with bullet symbols: {docx_path}")
     
     if compress_docx_formatting(docx_path):
         print(f"✅ DOCX compression completed successfully!")
         print(f"🏆 Professional 1-page DOCX ready with proper formatting")
         print(f"🎉 COMPLETE: Professional 1-page DOCX generated!")
-        print(f"📄 Features: Proper fonts, blue headers, icons, bullets, 1.2cm margins")
+        print(f"📄 Features: Proper fonts, blue headers, icons, bullet symbols (•), 1.2cm margins")
         print(f"📍 Location: {docx_path}")
         return True
     else:
