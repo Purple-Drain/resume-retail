@@ -116,7 +116,7 @@ pack-src: distdir
 	@tar --exclude=.git --exclude=.gitignore -czf $(PACK_SRC) $(SRC_ITEMS)
 
 pack-full: distdir
-	@tar --exclude=.git --exclude=.gitignore -czf $(PACK_FULL) .
+	@tar --exclude=.git --exclude=.gitignore --exclude=dist -czf $(PACK_FULL) .
 
 # Employer-specific packs bundle PDFs + DOCX under each folder
 pack-jb: pdf-jb docx-jb distdir
