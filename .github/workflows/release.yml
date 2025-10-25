@@ -27,13 +27,23 @@ jobs:
           
       - name: Build all artifacts
         run: |
+          # Build everything first
           make all
-          mkdir -p dist
-          # Copy PDFs and DOCX to dist as separate folders
+          
+          # Wait to ensure all file operations complete
+          sleep 2
+          
+          # Now create distribution folders
           mkdir -p dist/pdfs dist/docx
+          
+          # Copy files to dist folders
           find resume -type f -name "*.pdf" -exec cp {} dist/pdfs/ \;
           find resume -type f -name "*.docx" -exec cp {} dist/docx/ \;
-          # Create tarballs
+          
+          # Wait before creating tarballs
+          sleep 1
+          
+          # Create tarballs from completed files
           make pack
           
       - name: Create GitHub Release
