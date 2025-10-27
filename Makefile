@@ -50,7 +50,7 @@ pdf-jb:
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Checklist_JBHiFi_Burwood.tex
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Application_Pack_JBHiFi_Burwood_Blue_Final.tex
 
-pdf-tgg:
+pdf-tgg:resume/main/Resume_Main.pdf
 	@echo "Building TGG employer pack..."
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Cover_Letter_TGG.tex
 	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Application_Pack_TGG.tex
