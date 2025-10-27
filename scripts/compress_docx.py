@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-DOCX compression with perfect PDF parity including bullet points (•)
+DOCX compression with hybrid labeled contact format for maximum ATS compatibility
+Fixes: No double bullets, proper email with @, Professional Summary
 """
 import os
 import sys
@@ -32,44 +33,43 @@ def add_horizontal_line(paragraph, color_rgb=(70, 130, 180)):
 
 def is_bullet_point(text):
     """Detect if a paragraph should be a bullet point"""
-    # Key Skills section bullets
+    # Skip if already has bullet symbol
+    if text.strip().startswith('•'):
+        return False
+        
     key_skills = [
         "Customer service", "POS system", "Merchandising",
         "Team collaboration", "Technology,", "Loss prevention",
         "Effective communication"
     ]
     
-    # Job experience bullets - typically start with action verbs
     action_verbs = [
         "Delivered", "Processed", "Handled", "Set up",
         "Trained", "Specialized", "Maintained", 
         "Collaborated", "Applied", "Partnered"
     ]
     
-    # Check if it's a Key Skills bullet
     if any(skill in text for skill in key_skills):
         return True
     
-    # Check if it starts with an action verb (job bullets)
     if any(text.strip().startswith(verb) for verb in action_verbs):
         return True
     
-    # Check for bullets in Additional Information
     if text.startswith("Passionate about") or text.startswith("Available for"):
         return True
         
     return False
 
 def add_bullet_symbol(paragraph):
-    """Add actual bullet symbol (•) to the beginning of paragraph text"""
+    """Add bullet symbol (•) only if not already present"""
     if paragraph.runs and paragraph.text.strip():
-        # Get the current text
         full_text = paragraph.text.strip()
         
-        # Clear the paragraph
+        # Don't add if already has bullet
+        if full_text.startswith('•'):
+            return
+            
         paragraph.clear()
-        
-        # Add bullet symbol + space + original text
         bullet_text = f"• {full_text}"
         run = paragraph.add_run(bullet_text)
         run.font.name = "Times New Roman"
@@ -77,13 +77,13 @@ def add_bullet_symbol(paragraph):
         run.font.color.rgb = RGBColor(0, 0, 0)
 
 def compress_docx_formatting(docx_path):
-    """Apply complete formatting with perfect PDF match including bullet symbols"""
+    """Apply complete formatting with hybrid labeled contact for ATS"""
     
     if not os.path.exists(docx_path):
         print(f"❌ File not found: {docx_path}")
         return False
     
-    print(f"🔧 Applying perfect formatting with bullet symbols: {docx_path}")
+    print(f"🔧 Applying ATS-optimized formatting: {docx_path}")
     
     try:
         doc = Document(docx_path)
@@ -95,12 +95,10 @@ def compress_docx_formatting(docx_path):
             section.left_margin = Cm(1.2)
             section.right_margin = Cm(1.2)
         
-        # Track paragraphs to remove
         paras_to_remove = []
         
-        # Section headers
         section_headers = [
-            "About Me", "Key Skills", "Retail Experience",
+            "About Me", "Professional Summary", "Key Skills", "Retail Experience",
             "Other Professional Experience", "Education",
             "Additional Information"
         ]
@@ -138,19 +136,31 @@ def compress_docx_formatting(docx_path):
                 name_run.font.color.rgb = RGBColor(0, 0, 0)
                 continue
             
-            # HEADER: Contact block - rebuild with icons
-            if any(contact in text.lower() for contact in ["homebush", "0400", "@protonmail", "linkedin.com/in"]):
+            # HEADER: Contact block - HYBRID LABELED FORMAT for ATS
+            if any(contact in text.lower() for contact in ["homebush", "0400", "@gmail", "@protonmail", "linkedin.com/in"]):
                 para.clear()
                 para.paragraph_format.space_before = Pt(0)
-                para.paragraph_format.space_after = Pt(10)
+                para.paragraph_format.space_after = Pt(3)
                 para.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
                 
-                # Single line with icons
-                contact_text = "📍 Homebush, NSW   📞 0400 375 308   ✉️ aarondevries@protonmail.com   💼 linkedin.com/in/aarondevriesdev"
-                contact_run = para.add_run(contact_text)
-                contact_run.font.name = "Times New Roman"
-                contact_run.font.size = Pt(9)
-                contact_run.font.color.rgb = RGBColor(70, 130, 180)
+                # Line 1: Location and Phone
+                contact_line1 = "Location: Homebush, NSW  |  Phone: 0400 375 308"
+                line1_run = para.add_run(contact_line1)
+                line1_run.font.name = "Times New Roman"
+                line1_run.font.size = Pt(9)
+                line1_run.font.color.rgb = RGBColor(70, 130, 180)
+                
+                # Add line break
+                para.add_run("\n")
+                
+                # Line 2: Email and LinkedIn (with proper @)
+                contact_line2 = "Email: aaron.jp.devries@gmail.com  |  LinkedIn: linkedin.com/in/aarondevriesdev"
+                line2_run = para.add_run(contact_line2)
+                line2_run.font.name = "Times New Roman"
+                line2_run.font.size = Pt(9)
+                line2_run.font.color.rgb = RGBColor(70, 130, 180)
+                
+                para.paragraph_format.space_after = Pt(10)
                 continue
             
             # Section headers with blue underlines
@@ -167,13 +177,11 @@ def compress_docx_formatting(docx_path):
                 add_horizontal_line(para)
                 continue
             
-            # BULLET POINTS - Add bullet symbols (•)
+            # BULLET POINTS - only add if not already there
             if is_bullet_point(text):
                 para.paragraph_format.space_before = Pt(0)
                 para.paragraph_format.space_after = Pt(2)
-                para.paragraph_format.left_indent = Cm(0.5)  # Indent for bullets
-                
-                # Add bullet symbol to text
+                para.paragraph_format.left_indent = Cm(0.5)
                 add_bullet_symbol(para)
                 continue
             
@@ -204,7 +212,7 @@ def compress_docx_formatting(docx_path):
                     run.font.size = Pt(10)
                 continue
             
-            # Regular content (About Me paragraph, etc)
+            # Regular content
             para.paragraph_format.space_before = Pt(0)
             para.paragraph_format.space_after = Pt(2)
             
@@ -213,7 +221,7 @@ def compress_docx_formatting(docx_path):
                 run.font.size = Pt(10)
                 run.font.color.rgb = RGBColor(0, 0, 0)
         
-        # Remove marked paragraphs (title line)
+        # Remove marked paragraphs
         for para in paras_to_remove:
             p = para._element
             p.getparent().remove(p)
@@ -227,7 +235,7 @@ def compress_docx_formatting(docx_path):
         style.paragraph_format.line_spacing = 1.0
         
         doc.save(docx_path)
-        print(f"✅ Perfect formatting with bullet symbols applied")
+        print(f"✅ ATS-optimized DOCX complete")
         return True
         
     except Exception as e:
@@ -245,13 +253,12 @@ def main():
         print(f"❌ File not found: {docx_path}")
         sys.exit(1)
     
-    print(f"🚀 Creating perfect DOCX with bullet symbols: {docx_path}")
+    print(f"🚀 Creating ATS-optimized DOCX: {docx_path}")
     
     if compress_docx_formatting(docx_path):
         print(f"✅ DOCX compression completed successfully!")
-        print(f"🏆 Professional 1-page DOCX ready with proper formatting")
-        print(f"🎉 COMPLETE: Professional 1-page DOCX generated!")
-        print(f"📄 Features: Proper fonts, blue headers, icons, bullet symbols (•), 1.2cm margins")
+        print(f"🏆 Professional 1-page DOCX ready")
+        print(f"🎉 Features: Labeled contact, single bullets, blue headers")
         print(f"📍 Location: {docx_path}")
         return True
     else:
