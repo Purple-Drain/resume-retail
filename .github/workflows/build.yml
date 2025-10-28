@@ -88,6 +88,26 @@ jobs:
           pip3 install --user python-docx
       - name: Build (PDF + DOCX)
         run: make all
+        continue-on-error: true
+        id: build_step
+
+      - name: Capture LaTeX logs on failure
+        if: failure() && steps.build_step.outcome == 'failure'
+        run: |
+          echo "📋 Capturing LaTeX log files..."
+          find resume -name "*.log" -type f -exec echo "=== {} ===" \; -exec cat {} \;
+
+      - name: Upload LaTeX logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: latex-logs-${{ matrix.pack }}
+          path: resume/**/*.log
+          if-no-files-found: warn
+
+      - name: Fail if build failed
+        if: steps.build_step.outcome == 'failure'
+        run: exit 1
       - name: Package (date + git hash tarballs)
         run: make pack
       - name: Upload All PDFs
