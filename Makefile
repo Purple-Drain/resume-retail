@@ -19,36 +19,36 @@ help:
 	@echo "Employer packs: pack-jb, pack-tgg, pack-rebel"
 pdf:
 	@echo "Building all individual PDFs..."
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Resume_Main.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Cover_Letter_Main.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Application_Pack_Main.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Cover_Letter_JBHiFi_Burwood_Blue_Final.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/JB_HiFi_Burwood_Form_Answers_Expanded.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Checklist_JBHiFi_Burwood.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/Application_Pack_JBHiFi_Burwood_Blue_Final.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Cover_Letter_TGG.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Application_Pack_TGG.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Cover_Letter_Rebel.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Application_Pack_Rebel.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_Resume.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_CoverLetter.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_ApplicationPack.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/AaronDeVries_CoverLetter_JBHiFi_Burwood.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/AaronDeVries_FormAnswers_JBHiFi_Burwood.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/AaronDeVries_AaronDeVries_Checklist_JBHiFi_Burwood.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/AaronDeVries_ApplicationPack_JBHiFi_Burwood.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/AaronDeVries_CoverLetter_TheGoodGuys.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/AaronDeVries_ApplicationPack_TheGoodGuys.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/AaronDeVries_CoverLetter_RebelSport.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/AaronDeVries_ApplicationPack_RebelSport.tex
 # Employer-specific PDF targets
 pdf-main:
 	@echo "Building main resume components..."
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Resume_Main.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Cover_Letter_Main.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/Application_Pack_Main.tex
-pdf-jb: resume/main/Resume_Main.pdf
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_Resume.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_CoverLetter.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_ApplicationPack.tex
+pdf-jb: resume/main/AaronDeVries_Resume.pdf
 	$(MAKE) -C resume/jb pdf
 
-resume/main/Resume_Main.pdf:
+resume/main/AaronDeVries_Resume.pdf:
 	$(MAKE) -C resume/main pdf
 pdf-tgg:
 	@echo "Building TGG employer pack..."
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Cover_Letter_TGG.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/Application_Pack_TGG.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/AaronDeVries_CoverLetter_TheGoodGuys.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/AaronDeVries_ApplicationPack_TheGoodGuys.tex
 pdf-rebel:
 	@echo "Building Rebel employer pack..."
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Cover_Letter_Rebel.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/Application_Pack_Rebel.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/AaronDeVries_CoverLetter_RebelSport.tex
+	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/AaronDeVries_ApplicationPack_RebelSport.tex
 # Employer-specific DOCX targets  
 docx-jb docx-tgg docx-rebel:
 	@echo "Building employer DOCX..."

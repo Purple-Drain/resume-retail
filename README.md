@@ -8,24 +8,24 @@ A LaTeX-based resume and cover letter system optimized for retail job applicatio
 resume-retail/
 ├── resume/
 │   ├── main/                    # Default/master resume files
-│   │   ├── Resume_Main.tex      # Main resume (promoted from JB Blue)
-│   │   ├── Cover_Letter_Main.tex
-│   │   ├── Application_Pack_Main.tex
+│   │   ├── AaronDeVries_Resume.tex      # Main resume (promoted from JB Blue)
+│   │   ├── AaronDeVries_CoverLetter.tex
+│   │   ├── AaronDeVries_ApplicationPack.tex
 │   │   └── colors.sty           # Shared color definitions
 │   │
 │   ├── jb/                      # JB Hi-Fi specific assets
-│   │   ├── Cover_Letter_JBHiFi_Burwood_Blue_Final.tex
-│   │   ├── JB_HiFi_Burwood_Form_Answers_Expanded.tex
-│   │   ├── Checklist_JBHiFi_Burwood.tex
-│   │   └── Application_Pack_JBHiFi_Burwood_Blue_Final.tex
+│   │   ├── AaronDeVries_CoverLetter_JBHiFi_Burwood.tex
+│   │   ├── AaronDeVries_FormAnswers_JBHiFi_Burwood.tex
+│   │   ├── AaronDeVries_AaronDeVries_Checklist_JBHiFi_Burwood.tex
+│   │   └── AaronDeVries_ApplicationPack_JBHiFi_Burwood.tex
 │   │
 │   ├── tgg/                     # The Good Guys specific assets
-│   │   ├── Cover_Letter_TGG.tex
-│   │   └── Application_Pack_TGG.tex
+│   │   ├── AaronDeVries_CoverLetter_TheGoodGuys.tex
+│   │   └── AaronDeVries_ApplicationPack_TheGoodGuys.tex
 │   │
 │   └── rebel/                   # Rebel Sport specific assets
-│       ├── Cover_Letter_Rebel.tex
-│       └── Application_Pack_Rebel.tex
+│       ├── AaronDeVries_CoverLetter_RebelSport.tex
+│       └── AaronDeVries_ApplicationPack_RebelSport.tex
 │
 ├── .github/workflows/           # CI/CD automation
 │   ├── build.yml               # Main build workflow
@@ -41,7 +41,7 @@ resume-retail/
 
 ## Design Philosophy
 
-- **Single Source of Truth**: The master resume lives in `resume/main/Resume_Main.tex`
+- **Single Source of Truth**: The master resume lives in `resume/main/AaronDeVries_Resume.tex`
 - **Employer-Specific Assets Only**: Each employer folder (`jb/`, `tgg/`, `rebel/`) contains only variable content:
   - Cover letters
   - Form answers
@@ -86,7 +86,7 @@ The system now includes **automatic DOCX compression** that converts the typical
 make docx                   # Full pipeline: pandoc + compression
 
 # Manual compression only (if DOCX already exists)
-python3 scripts/compress_docx.py resume/main/Resume_Main.docx
+python3 scripts/compress_docx.py resume/main/AaronDeVries_Resume.docx
 
 # Enhanced generation pipeline
 python3 scripts/enhance_docx.py  # Pandoc + automatic compression
@@ -139,7 +139,7 @@ If you need to compress an existing DOCX file:
 python3 scripts/compress_docx.py path/to/resume.docx
 
 # Compress default main resume
-python3 scripts/compress_docx.py  # Uses resume/main/Resume_Main.docx
+python3 scripts/compress_docx.py  # Uses resume/main/AaronDeVries_Resume.docx
 ```
 
 ### Troubleshooting DOCX
@@ -152,7 +152,7 @@ python3 scripts/setup_docx.py  # Automatic setup
 
 **DOCX still 3 pages:**
 - Check that `python-docx` is installed
-- Run compression manually: `python3 scripts/compress_docx.py resume/main/Resume_Main.docx`
+- Run compression manually: `python3 scripts/compress_docx.py resume/main/AaronDeVries_Resume.docx`
 - Verify no manual page breaks in content
 
 **Icons not showing:**
@@ -233,7 +233,7 @@ Both include FontAwesome5 package installation and produce downloadable artifact
 ## Customization
 
 ### Contact Information
-Update the `ContactBlock` macro in `resume/main/Resume_Main.tex`:
+Update the `ContactBlock` macro in `resume/main/AaronDeVries_Resume.tex`:
 
 ```latex
 \renewcommand{\ContactBlock}{%
