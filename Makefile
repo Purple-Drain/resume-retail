@@ -1,100 +1,103 @@
-# ---- Source items for packaging (tex optional) ----
-SRC_ITEMS := resume Makefile README.md VERSION scripts
-ifneq ("$(wildcard tex)","")
-  SRC_ITEMS += tex
-endif
-.PHONY: help pdf docx all clean pack pack-src pack-full distdir \
-        pack-jb pack-tgg pack-rebel pdf-jb pdf-tgg pdf-rebel \
-        docx-jb docx-tgg docx-rebel
-MAIN := resume/main
-JB   := resume/jb
-TGG  := resume/tgg
-REBEL:= resume/rebel
-LATEXMK := latexmk
-PANDOC  := pandoc
-LATEXMK_FLAGS := -pdf -halt-on-error -interaction=nonstopmode -cd -silent
-PANDOC_FLAGS  := -s --resource-path=".:./tex:./resume:./resume/shared:./resume/main:./resume/jb:./resume/tgg:./resume/rebel"
-help:
-	@echo "Targets: pdf, docx, all, clean"
-	@echo "Employer packs: pack-jb, pack-tgg, pack-rebel"
-pdf:
-	@echo "Building all individual PDFs..."
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_Resume.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_CoverLetter.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_ApplicationPack.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/AaronDeVries_CoverLetter_JBHiFi_Burwood.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/AaronDeVries_FormAnswers_JBHiFi_Burwood.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/AaronDeVries_AaronDeVries_Checklist_JBHiFi_Burwood.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(JB)/AaronDeVries_ApplicationPack_JBHiFi_Burwood.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/AaronDeVries_CoverLetter_TheGoodGuys.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/AaronDeVries_ApplicationPack_TheGoodGuys.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/AaronDeVries_CoverLetter_RebelSport.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/AaronDeVries_ApplicationPack_RebelSport.tex
-# Employer-specific PDF targets
-pdf-main:
-	@echo "Building main resume components..."
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_Resume.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_CoverLetter.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(MAIN)/AaronDeVries_ApplicationPack.tex
-pdf-jb: resume/main/AaronDeVries_Resume.pdf
-	$(MAKE) -C resume/jb pdf
+# Resume Retail Makefile
+# Source files keep original names, outputs use Australian standards
 
-resume/main/AaronDeVries_Resume.pdf:
-	$(MAKE) -C resume/main pdf
+LATEXMK := latexmk
+LATEXMK_FLAGS := -pdf -interaction=nonstopmode
+
+# Source file paths (original names)
+MAIN_DIR := resume/main
+JB_DIR := resume/jb
+TGG_DIR := resume/tgg
+REBEL_DIR := resume/rebel
+
+.PHONY: all pdf pdf-main pdf-jb pdf-tgg pdf-rebel docx clean
+
+# Build all PDFs
+all: pdf
+	@echo "✅ All files built successfully"
+
+pdf: pdf-main pdf-jb pdf-tgg pdf-rebel
+
+# Main resume
+pdf-main:
+	@echo "Building main resume..."
+	cd $(MAIN_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) Resume_Main.tex
+	@if [ -f $(MAIN_DIR)/Resume_Main.pdf ]; then \
+		mv $(MAIN_DIR)/Resume_Main.pdf $(MAIN_DIR)/AaronDeVries_Resume.pdf; \
+		echo "✓ Created AaronDeVries_Resume.pdf"; \
+	fi
+	@echo "Building main cover letter..."
+	cd $(MAIN_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) Cover_Letter_Main.tex
+	@if [ -f $(MAIN_DIR)/Cover_Letter_Main.pdf ]; then \
+		mv $(MAIN_DIR)/Cover_Letter_Main.pdf $(MAIN_DIR)/AaronDeVries_CoverLetter.pdf; \
+		echo "✓ Created AaronDeVries_CoverLetter.pdf"; \
+	fi
+	@echo "Building main application pack..."
+	cd $(MAIN_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) Application_Pack_Main.tex
+	@if [ -f $(MAIN_DIR)/Application_Pack_Main.pdf ]; then \
+		mv $(MAIN_DIR)/Application_Pack_Main.pdf $(MAIN_DIR)/AaronDeVries_ApplicationPack.pdf; \
+		echo "✓ Created AaronDeVries_ApplicationPack.pdf"; \
+	fi
+
+# JB Hi-Fi
+pdf-jb:
+	@echo "Building JB Hi-Fi documents..."
+	cd $(JB_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) Cover_Letter_JBHiFi_Burwood_Blue_Final.tex
+	@if [ -f $(JB_DIR)/Cover_Letter_JBHiFi_Burwood_Blue_Final.pdf ]; then \
+		mv $(JB_DIR)/Cover_Letter_JBHiFi_Burwood_Blue_Final.pdf $(JB_DIR)/AaronDeVries_CoverLetter_JBHiFi_Burwood.pdf; \
+		echo "✓ Created AaronDeVries_CoverLetter_JBHiFi_Burwood.pdf"; \
+	fi
+	cd $(JB_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) Application_Pack_JBHiFi_Burwood_Blue_Final.tex
+	@if [ -f $(JB_DIR)/Application_Pack_JBHiFi_Burwood_Blue_Final.pdf ]; then \
+		mv $(JB_DIR)/Application_Pack_JBHiFi_Burwood_Blue_Final.pdf $(JB_DIR)/AaronDeVries_ApplicationPack_JBHiFi_Burwood.pdf; \
+		echo "✓ Created AaronDeVries_ApplicationPack_JBHiFi_Burwood.pdf"; \
+	fi
+	cd $(JB_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) JB_HiFi_Burwood_Form_Answers_Expanded.tex
+	@if [ -f $(JB_DIR)/JB_HiFi_Burwood_Form_Answers_Expanded.pdf ]; then \
+		mv $(JB_DIR)/JB_HiFi_Burwood_Form_Answers_Expanded.pdf $(JB_DIR)/AaronDeVries_FormAnswers_JBHiFi_Burwood.pdf; \
+		echo "✓ Created AaronDeVries_FormAnswers_JBHiFi_Burwood.pdf"; \
+	fi
+	cd $(JB_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) Checklist_JBHiFi_Burwood.tex
+	@if [ -f $(JB_DIR)/Checklist_JBHiFi_Burwood.pdf ]; then \
+		mv $(JB_DIR)/Checklist_JBHiFi_Burwood.pdf $(JB_DIR)/AaronDeVries_Checklist_JBHiFi_Burwood.pdf; \
+		echo "✓ Created AaronDeVries_Checklist_JBHiFi_Burwood.pdf"; \
+	fi
+
+# The Good Guys
 pdf-tgg:
-	@echo "Building TGG employer pack..."
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/AaronDeVries_CoverLetter_TheGoodGuys.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(TGG)/AaronDeVries_ApplicationPack_TheGoodGuys.tex
+	@echo "Building The Good Guys documents..."
+	cd $(TGG_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) Cover_Letter_TGG.tex
+	@if [ -f $(TGG_DIR)/Cover_Letter_TGG.pdf ]; then \
+		mv $(TGG_DIR)/Cover_Letter_TGG.pdf $(TGG_DIR)/AaronDeVries_CoverLetter_TheGoodGuys.pdf; \
+		echo "✓ Created AaronDeVries_CoverLetter_TheGoodGuys.pdf"; \
+	fi
+	cd $(TGG_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) Application_Pack_TGG.tex
+	@if [ -f $(TGG_DIR)/Application_Pack_TGG.pdf ]; then \
+		mv $(TGG_DIR)/Application_Pack_TGG.pdf $(TGG_DIR)/AaronDeVries_ApplicationPack_TheGoodGuys.pdf; \
+		echo "✓ Created AaronDeVries_ApplicationPack_TheGoodGuys.pdf"; \
+	fi
+
+# Rebel Sport
 pdf-rebel:
-	@echo "Building Rebel employer pack..."
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/AaronDeVries_CoverLetter_RebelSport.tex
-	@$(LATEXMK) $(LATEXMK_FLAGS) $(REBEL)/AaronDeVries_ApplicationPack_RebelSport.tex
-# Employer-specific DOCX targets  
-docx-jb docx-tgg docx-rebel:
-	@echo "Building employer DOCX..."
-	@python3 scripts/enhance_docx.py
-all: pdf docx
+	@echo "Building Rebel Sport documents..."
+	cd $(REBEL_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) Cover_Letter_Rebel.tex
+	@if [ -f $(REBEL_DIR)/Cover_Letter_Rebel.pdf ]; then \
+		mv $(REBEL_DIR)/Cover_Letter_Rebel.pdf $(REBEL_DIR)/AaronDeVries_CoverLetter_RebelSport.pdf; \
+		echo "✓ Created AaronDeVries_CoverLetter_RebelSport.pdf"; \
+	fi
+	cd $(REBEL_DIR) && $(LATEXMK) $(LATEXMK_FLAGS) Application_Pack_Rebel.tex
+	@if [ -f $(REBEL_DIR)/Application_Pack_Rebel.pdf ]; then \
+		mv $(REBEL_DIR)/Application_Pack_Rebel.pdf $(REBEL_DIR)/AaronDeVries_ApplicationPack_RebelSport.pdf; \
+		echo "✓ Created AaronDeVries_ApplicationPack_RebelSport.pdf"; \
+	fi
+
+# Clean build artifacts
 clean:
 	@echo "Cleaning all build artifacts..."
-	@find . -name "*.fls" -exec latexmk -C -silent {} \; 2>/dev/null || true
-	@find . -name "*.aux" -delete 2>/dev/null || true
-	@find . -name "*.fls" -delete 2>/dev/null || true
-	@find . -name "*.fdb_latexmk" -delete 2>/dev/null || true
-	@find . -name "*.log" -delete 2>/dev/null || true
-	@find . -name "*.out" -delete 2>/dev/null || true
-	@find . -name "*.synctex.gz" -delete 2>/dev/null || true
-	@find . -name "*.docx" -delete 2>/dev/null || true
-	@find . -name ".DS_Store" -delete 2>/dev/null || true
+	@find resume -name "*.aux" -delete
+	@find resume -name "*.log" -delete
+	@find resume -name "*.out" -delete
+	@find resume -name "*.synctex.gz" -delete
+	@find resume -name "*.fdb_latexmk" -delete
+	@find resume -name "*.fls" -delete
 	@echo "✅ Cleanup complete"
-clean-pdf:
-	@echo "Cleaning PDF files only..."
-	@find . -name "*.pdf" -delete 2>/dev/null || true
-	@echo "✅ PDFs removed"
-clean-all: clean clean-pdf
-	@echo "Deep clean: removing distribution files..."
-	@rm -rf dist/ 2>/dev/null || true
-	@echo "✅ Everything cleaned"
-# ---- Packaging (date + git hash) ----
-DATE := $(shell date +%F)
-HASH := $(shell git rev-parse --short HEAD 2>/dev/null || echo NOHASH)
-DIST := dist
-PACK_SRC  := $(DIST)/resume-retail_src_$(DATE)_$(HASH).tar.gz
-PACK_FULL := $(DIST)/resume-retail_full_$(DATE)_$(HASH).tar.gz
-# Employer pack tarballs
-PACK_JB    := $(DIST)/jb_pack_$(DATE)_$(HASH).tar.gz
-PACK_TGG   := $(DIST)/tgg_pack_$(DATE)_$(HASH).tar.gz
-PACK_REBEL := $(DIST)/rebel_pack_$(DATE)_$(HASH).tar.gz
-pack: pack-src pack-full
-distdir:
-	@mkdir -p $(DIST)
-pack-src: distdir
-	@tar --exclude=.git --exclude=.gitignore -czf $(PACK_SRC) $(SRC_ITEMS)
-pack-full: distdir
-	@tar --exclude=.git --exclude=.gitignore --exclude=dist -czf $(PACK_FULL) .
-# Employer-specific packs bundle PDFs + DOCX under each folder
-pack-jb: pdf-jb docx-jb distdir
-	@tar -czf $(PACK_JB) $(JB)/*.pdf $(JB)/*.docx 2>/dev/null || tar -czf $(PACK_JB) $(JB)/*.pdf
-pack-tgg: pdf-tgg docx-tgg distdir
-	@tar -czf $(PACK_TGG) $(TGG)/*.pdf $(TGG)/*.docx 2>/dev/null || tar -czf $(PACK_TGG) $(TGG)/*.pdf
-pack-rebel: pdf-rebel docx-rebel distdir
-	@tar -czf $(PACK_REBEL) $(REBEL)/*.pdf $(REBEL)/*.docx 2>/dev/null || tar -czf $(PACK_REBEL) $(REBEL)/*.pdf
