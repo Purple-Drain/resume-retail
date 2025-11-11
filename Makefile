@@ -1,5 +1,4 @@
-# Resume Retail Makefile
-# Source files keep original names, outputs use Australian standards
+# Resume Retail Makefile (Extended)
 
 LATEXMK := latexmk
 LATEXMK_FLAGS := -pdf -interaction=nonstopmode
@@ -10,13 +9,15 @@ JB_DIR := resume/jb
 TGG_DIR := resume/tgg
 REBEL_DIR := resume/rebel
 
-.PHONY: all pdf pdf-main pdf-jb pdf-tgg pdf-rebel docx clean
+APPLICATIONS_DIR := applications
+
+.PHONY: all pdf pdf-main pdf-jb pdf-tgg pdf-rebel pdf-applications docx clean dirs
 
 # Build all PDFs
 all: pdf
 	@echo "✅ All files built successfully"
 
-pdf: pdf-main pdf-jb pdf-tgg pdf-rebel
+pdf: pdf-main pdf-jb pdf-tgg pdf-rebel pdf-applications
 
 # Main resume
 pdf-main:
@@ -91,6 +92,26 @@ pdf-rebel:
 		echo "✓ Created AaronDeVries_ApplicationPack_RebelSport.pdf"; \
 	fi
 
+# Applications
+pdf-applications:
+	@echo "Building application cover letters..."
+	cd $(APPLICATIONS_DIR)/HarveyNorman-OnlineCustomerService-HomebushWest/source && $(LATEXMK) $(LATEXMK_FLAGS) coverletter.tex
+	@if [ -f $(APPLICATIONS_DIR)/HarveyNorman-OnlineCustomerService-HomebushWest/source/coverletter.pdf ]; then \
+		mv $(APPLICATIONS_DIR)/HarveyNorman-OnlineCustomerService-HomebushWest/source/coverletter.pdf $(APPLICATIONS_DIR)/HarveyNorman-OnlineCustomerService-HomebushWest/exports/HarveyNorman_CoverLetter.pdf; \
+		echo "✓ Created HarveyNorman_CoverLetter.pdf"; \
+	fi
+	cd $(APPLICATIONS_DIR)/ChemistWarehouse-PharmacyAssistant-VariousLocations/source && $(LATEXMK) $(LATEXMK_FLAGS) coverletter.tex
+	@if [ -f $(APPLICATIONS_DIR)/ChemistWarehouse-PharmacyAssistant-VariousLocations/source/coverletter.pdf ]; then \
+		mv $(APPLICATIONS_DIR)/ChemistWarehouse-PharmacyAssistant-VariousLocations/source/coverletter.pdf $(APPLICATIONS_DIR)/ChemistWarehouse-PharmacyAssistant-VariousLocations/exports/ChemistWarehouse_CoverLetter.pdf; \
+		echo "✓ Created ChemistWarehouse_CoverLetter.pdf"; \
+	fi
+
+# Convert PDFs to DOCX (requires pandoc installed)
+docx:
+	@echo "Converting PDFs to DOCX..."
+	pandoc $(APPLICATIONS_DIR)/HarveyNorman-OnlineCustomerService-HomebushWest/source/coverletter.tex -o $(APPLICATIONS_DIR)/HarveyNorman-OnlineCustomerService-HomebushWest/exports/HarveyNorman_CoverLetter.docx
+	pandoc $(APPLICATIONS_DIR)/ChemistWarehouse-PharmacyAssistant-VariousLocations/source/coverletter.tex -o $(APPLICATIONS_DIR)/ChemistWarehouse-PharmacyAssistant-VariousLocations/exports/ChemistWarehouse_CoverLetter.docx
+
 # Clean build artifacts
 clean:
 	@echo "Cleaning all build artifacts..."
@@ -100,4 +121,16 @@ clean:
 	@find resume -name "*.synctex.gz" -delete
 	@find resume -name "*.fdb_latexmk" -delete
 	@find resume -name "*.fls" -delete
+	@find $(APPLICATIONS_DIR) -name "*.aux" -delete
+	@find $(APPLICATIONS_DIR) -name "*.log" -delete
+	@find $(APPLICATIONS_DIR) -name "*.out" -delete
+	@find $(APPLICATIONS_DIR) -name "*.synctex.gz" -delete
+	@find $(APPLICATIONS_DIR) -name "*.fdb_latexmk" -delete
+	@find $(APPLICATIONS_DIR) -name "*.fls" -delete
 	@echo "✅ Cleanup complete"
+
+# Create export directories if not exist
+dirs:
+	mkdir -p $(APPLICATIONS_DIR)/HarveyNorman-OnlineCustomerService-HomebushWest/exports
+	mkdir -p $(APPLICATIONS_DIR)/ChemistWarehouse-PharmacyAssistant-VariousLocations/exports
+
